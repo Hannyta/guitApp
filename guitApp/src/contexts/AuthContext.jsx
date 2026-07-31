@@ -25,8 +25,14 @@ export function AuthProvider({ children }) {
     loading,
     signUp: (email, password) => supabase.auth.signUp({ email, password }),
     signIn: (email, password) => supabase.auth.signInWithPassword({ email, password }),
+    signInWithGoogle: () =>
+      supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: window.location.origin },
+      }),
     signOut: () => supabase.auth.signOut(),
     updateCurrency: (currency) => supabase.auth.updateUser({ data: { currency } }),
+    updateProfile: (fields) => supabase.auth.updateUser({ data: fields }),
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

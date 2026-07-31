@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { Brand } from '../components/branding/Brand'
+import { GoogleIcon } from '../components/icons/GoogleIcon'
 
 export function LoginPage() {
-  const { signIn } = useAuth()
+  const { signIn, signInWithGoogle } = useAuth()
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -26,12 +27,30 @@ export function LoginPage() {
     navigate('/', { replace: true })
   }
 
+  async function handleOAuth(signInFn) {
+    setError(null)
+    const { error: oauthError } = await signInFn()
+    if (oauthError) setError(oauthError.message)
+  }
+
   return (
     <div className="auth-page">
       <Brand size={56} withTagline />
       <form className="auth-form" onSubmit={handleSubmit}>
         <h1>Iniciar sesión</h1>
         {error && <p className="form-error">{error}</p>}
+
+        <div className="oauth-buttons">
+          <button type="button" className="oauth-button" onClick={() => handleOAuth(signInWithGoogle)}>
+            <GoogleIcon />
+            Continuar con Google
+          </button>
+        </div>
+
+        <div className="oauth-divider">
+          <span>o con tu email</span>
+        </div>
+
         <label>
           Email
           <input

@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { Brand } from '../components/branding/Brand'
+import { GoogleIcon } from '../components/icons/GoogleIcon'
 
 export function SignupPage() {
-  const { signUp } = useAuth()
+  const { signUp, signInWithGoogle } = useAuth()
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -33,6 +34,12 @@ export function SignupPage() {
     }
   }
 
+  async function handleOAuth(signInFn) {
+    setError(null)
+    const { error: oauthError } = await signInFn()
+    if (oauthError) setError(oauthError.message)
+  }
+
   return (
     <div className="auth-page">
       <Brand size={56} withTagline />
@@ -40,6 +47,18 @@ export function SignupPage() {
         <h1>Crear cuenta</h1>
         {error && <p className="form-error">{error}</p>}
         {info && <p className="form-info">{info}</p>}
+
+        <div className="oauth-buttons">
+          <button type="button" className="oauth-button" onClick={() => handleOAuth(signInWithGoogle)}>
+            <GoogleIcon />
+            Continuar con Google
+          </button>
+        </div>
+
+        <div className="oauth-divider">
+          <span>o con tu email</span>
+        </div>
+
         <label>
           Email
           <input
