@@ -117,29 +117,120 @@ select {
 .auth-page {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.75rem;
-  padding: 1rem;
 }
 
-.auth-page .brand {
-  flex-direction: column;
+.auth-hero {
+  flex: 0.85;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  position: relative;
+  overflow: hidden;
+
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.28), transparent 35%),
+    linear-gradient(135deg, #9EDFC0 0%, #82D1AB 45%, #429E72 100%);
+
+  color: #ffffff;
+}
+
+.auth-hero::before {
+  content: '';
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  top: -140px;
+  right: -140px;
+}
+
+.auth-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(15,23,32,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15,23,32,0.04) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+.auth-hero-content {
+  position: relative;
+  max-width: 420px;
   text-align: center;
 }
 
-.auth-page .brand-text {
+.auth-hero-brand {
+  display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
 }
 
-.auth-page .brand-name {
-  font-size: 1.6rem;
+.auth-hero-wordmark {
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.01em;
 }
 
-.auth-page .brand-tagline {
-  font-size: 1rem;
-  margin-top: 0.25rem;
+.auth-hero-title {
+  font-size: clamp(2.3rem, 4vw, 3.3rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.auth-hero-showcase {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin: 1.5rem auto;
+  filter: drop-shadow(0 16px 28px rgba(10, 30, 20, 0.22));
+}
+
+.auth-hero-description {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba(246, 248, 247, 0.986);
+  margin: 0;
+}
+
+.auth-panel {
+  flex: 1.15;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem;
+  background: var(--page);
+}
+
+.auth-panel-main {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-legal {
+  max-width: 560px;
+  width: 100%;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  padding-top: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .auth-hero {
+    display: none;
+  }
 }
 
 .auth-form {
