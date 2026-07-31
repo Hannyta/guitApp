@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useCurrency } from '../../hooks/useCurrency'
 import { CloseIcon } from '../icons/CloseIcon'
-import { CategoryIcon } from '../categories/CategoryIcon'
+import { CategoryBadge } from '../categories/CategoryBadge'
 
 const dateFormatter = new Intl.DateTimeFormat('es', { day: '2-digit', month: 'short', year: 'numeric' })
 
@@ -58,13 +58,7 @@ export function TransactionsModal({ title, badgeColor, transactions, onClose }) 
                 <span className="modal-transaction-date">
                   {dateFormatter.format(new Date(`${transaction.occurred_on}T00:00:00`))}
                 </span>
-                <span
-                  className="category-badge"
-                  style={{ backgroundColor: transaction.category?.color ?? '#898781' }}
-                >
-                  <CategoryIcon icon={transaction.category?.icon} />
-                  {transaction.category?.name ?? 'Sin categoría'}
-                </span>
+                <CategoryBadge category={transaction.category} />
                 <span className="modal-transaction-description">{transaction.description || '—'}</span>
                 <span className={transaction.type === 'income' ? 'amount-income' : 'amount-expense'}>
                   {transaction.type === 'income' ? '+' : '-'}

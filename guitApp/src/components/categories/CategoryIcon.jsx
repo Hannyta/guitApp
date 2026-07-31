@@ -18,8 +18,9 @@ function ShoppingIcon(props) {
 function FoodIcon(props) {
   return (
     <svg {...iconProps} {...props}>
-      <rect x="11" y="2" width="2" height="20" rx="1" transform="rotate(-18 12 12)" />
-      <rect x="11" y="2" width="2" height="20" rx="1" transform="rotate(18 12 12)" />
+      <path d="M12 8.5c1.6-1.9 4.1-2 5.4-.4 1.9 2.1 1.3 6.2-1 9.3-1.7 2.1-3.1 2.8-4.4 2.8s-2.7-.7-4.4-2.8c-2.3-3.1-2.9-7.2-1-9.3 1.3-1.6 3.8-1.5 5.4.4Z" />
+      <rect x="11.3" y="3.6" width="1.5" height="3" rx="0.7" transform="rotate(20 12 5.1)" />
+      <path d="M13.2 4c1.2-.9 2.6-.6 2.7.5.1 1-1 1.6-2 1.4-.8-.2-1.2-1.2-.7-1.9Z" />
     </svg>
   )
 }
@@ -35,12 +36,12 @@ function HomeIcon(props) {
 function BankIcon(props) {
   return (
     <svg {...iconProps} {...props}>
-      <path d="M12 2 21 7.5H3L12 2Z" />
-      <rect x="4" y="9" width="2.4" height="9" />
-      <rect x="9.3" y="9" width="2.4" height="9" />
-      <rect x="12.3" y="9" width="2.4" height="9" />
-      <rect x="17.6" y="9" width="2.4" height="9" />
-      <rect x="3" y="19" width="18" height="2" rx="1" />
+      <path d="M12 1.5 21.5 7.3a1 1 0 0 1-.5 1.9H3a1 1 0 0 1-.5-1.9L12 1.5Z" />
+      <rect x="3.8" y="9.6" width="2.8" height="8.4" rx="1" />
+      <rect x="9" y="9.6" width="2.8" height="8.4" rx="1" />
+      <rect x="12.2" y="9.6" width="2.8" height="8.4" rx="1" />
+      <rect x="17.4" y="9.6" width="2.8" height="8.4" rx="1" />
+      <rect x="2.5" y="19" width="19" height="2.5" rx="1.2" />
     </svg>
   )
 }
@@ -56,8 +57,10 @@ function HealthIcon(props) {
 function OtherIcon(props) {
   return (
     <svg {...iconProps} {...props}>
-      <path d="M9 9a3 3 0 1 1 4.2 2.7c-.8.4-1.2 1-1.2 1.8v.5h-2v-.6c0-1.5.8-2.4 1.8-2.9A1 1 0 1 0 10 9H9Z" />
-      <circle cx="12" cy="17.5" r="1.3" />
+      <g transform="translate(12 11.5) scale(1.25) translate(-12 -11.5)">
+        <path d="M9 9a3 3 0 1 1 4.2 2.7c-.8.4-1.2 1-1.2 1.8v.5h-2v-.6c0-1.5.8-2.4 1.8-2.9A1 1 0 1 0 10 9H9Z" />
+        <circle cx="12" cy="17.5" r="1.3" />
+      </g>
     </svg>
   )
 }
@@ -65,10 +68,10 @@ function OtherIcon(props) {
 function DeliveryIcon(props) {
   return (
     <svg {...iconProps} {...props}>
-      <path d="M2 7h11v9H2z" />
+      <rect x="2" y="7" width="11" height="9" rx="1.2" />
       <path d="M13 10h4.5L21 13.5V16h-8v-6Z" />
-      <circle cx="6.5" cy="17.5" r="1.8" />
-      <circle cx="17.5" cy="17.5" r="1.8" />
+      <circle cx="6.5" cy="17.5" r="1.9" />
+      <circle cx="17.5" cy="17.5" r="1.9" />
     </svg>
   )
 }
@@ -76,10 +79,12 @@ function DeliveryIcon(props) {
 function FamilyIcon(props) {
   return (
     <svg {...iconProps} {...props}>
-      <circle cx="8" cy="7" r="3" />
-      <path d="M2 19c0-3.3 2.7-5 6-5s6 1.7 6 5v1H2v-1Z" />
-      <circle cx="17" cy="8" r="2.5" />
-      <path d="M13 20c.4-2.8 2-4.5 4.5-4.5S21.6 17.2 22 20v.3h-9Z" />
+      <circle cx="5" cy="7.5" r="2.3" />
+      <path d="M1.3 19c0-2.9 1.8-4.4 3.7-4.4s3.7 1.5 3.7 4.4v.5H1.3v-.5Z" />
+      <circle cx="19" cy="7.5" r="2.3" />
+      <path d="M15.3 19c0-2.9 1.8-4.4 3.7-4.4s3.7 1.5 3.7 4.4v.5h-7.4v-.5Z" />
+      <circle cx="12" cy="10.5" r="2" />
+      <path d="M8.3 20.3c0-2.6 1.6-4 3.7-4s3.7 1.4 3.7 4v.2H8.3v-.2Z" />
     </svg>
   )
 }
@@ -87,10 +92,10 @@ function FamilyIcon(props) {
 function GiftIcon(props) {
   return (
     <svg {...iconProps} {...props}>
-      <rect x="4" y="10" width="7" height="10" rx="1" />
-      <rect x="13" y="10" width="7" height="10" rx="1" />
-      <path d="M9 6a2 2 0 1 1 3 1.7V10h-3V7.7A2 2 0 0 1 9 6Z" />
-      <path d="M15 6a2 2 0 1 0-3 1.7V10h3V7.7A2 2 0 0 0 15 6Z" />
+      <rect x="4" y="9.8" width="7" height="10.7" rx="1.2" />
+      <rect x="13" y="9.8" width="7" height="10.7" rx="1.2" />
+      <path d="M12 8.6c-2.1-3.3-4.4-4.5-6.3-3.6-1.7.8-2.2 3-.6 4.1 1.2.9 3.6 1.3 6.9 1.3Zm0 0c2.1-3.3 4.4-4.5 6.3-3.6 1.7.8 2.2 3 .6 4.1-1.2.9-3.6 1.3-6.9 1.3Z" />
+      <circle cx="12" cy="8.6" r="1.4" />
     </svg>
   )
 }
@@ -98,7 +103,7 @@ function GiftIcon(props) {
 function TravelIcon(props) {
   return (
     <svg {...iconProps} {...props}>
-      <path d="M21 3 3 10.5l6.5 2L11 19l3-6L21 3Z" />
+      <path d="M21 16v-2l-8-5V4.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5Z" />
     </svg>
   )
 }
@@ -126,9 +131,9 @@ function UtilitiesIcon(props) {
 function TransportIcon(props) {
   return (
     <svg {...iconProps} {...props}>
-      <path d="M3 16v-4l2-5a2 2 0 0 1 2-1h10a2 2 0 0 1 2 1l2 5v4H3Z" />
-      <circle cx="7.5" cy="17.5" r="1.8" />
-      <circle cx="16.5" cy="17.5" r="1.8" />
+      <path d="M4 17v-3.5l1.5-4A2 2 0 0 1 7.4 8.2H8V6.5A1.5 1.5 0 0 1 9.5 5h5A1.5 1.5 0 0 1 16 6.5v1.7h.6a2 2 0 0 1 1.9 1.3l1.5 4V17H4Z" />
+      <circle cx="7.5" cy="18" r="2" />
+      <circle cx="16.5" cy="18" r="2" />
     </svg>
   )
 }
@@ -145,11 +150,9 @@ function BeautyIcon(props) {
 function FitnessIcon(props) {
   return (
     <svg {...iconProps} {...props}>
-      <rect x="10" y="9" width="4" height="6" rx="1" />
-      <rect x="3" y="8" width="3" height="8" rx="1" />
-      <rect x="18" y="8" width="3" height="8" rx="1" />
-      <rect x="6" y="10.5" width="2" height="3" />
-      <rect x="16" y="10.5" width="2" height="3" />
+      <rect x="1" y="8" width="4" height="8" rx="1.5" />
+      <rect x="19" y="8" width="4" height="8" rx="1.5" />
+      <rect x="5" y="10.5" width="14" height="3" rx="1" />
     </svg>
   )
 }
@@ -157,7 +160,10 @@ function FitnessIcon(props) {
 function LeisureIcon(props) {
   return (
     <svg {...iconProps} {...props}>
-      <path d="m12 3 2.5 5.5 6 .6-4.4 4 1.3 6-5.4-3.1L6.6 19l1.3-6-4.4-4 6-.6L12 3Z" />
+      <path
+        fillRule="evenodd"
+        d="M7 8h10a5 5 0 0 1 5 5v3a2.5 2.5 0 0 1-4.5 1.5L16 16H8l-1.5 1.5A2.5 2.5 0 0 1 2 15v-3a5 5 0 0 1 5-5Zm-.8 3.4h1.6V13h1.6v1.6H7.8V16H6.2v-1.4H4.6V13h1.6v-1.6Zm10.7.3a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Zm-2.5 2.5a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Z"
+      />
     </svg>
   )
 }
@@ -165,7 +171,8 @@ function LeisureIcon(props) {
 function EducationIcon(props) {
   return (
     <svg {...iconProps} {...props}>
-      <path d="M12 6c-2-1.3-5-1.3-8-.7v12c3-.6 6-.6 8 .7 2-1.3 5-1.3 8-.7v-12c-3-.6-6-.6-8 .7Z" />
+      <path d="M3 5.3c2.8-1 6.2-1 8.3.3v13.1c-2.1-1.3-5.5-1.3-8.3-.3V5.3Z" />
+      <path d="M21 5.3c-2.8-1-6.2-1-8.3.3v13.1c2.1-1.3 5.5-1.3 8.3-.3V5.3Z" />
     </svg>
   )
 }
@@ -190,7 +197,10 @@ function LaptopIcon(props) {
 function PhoneIcon(props) {
   return (
     <svg {...iconProps} {...props}>
-      <path d="M7 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H7Zm5 17a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4Z" />
+      <path
+        fillRule="evenodd"
+        d="M6.5 2A2.5 2.5 0 0 0 4 4.5v15A2.5 2.5 0 0 0 6.5 22h11a2.5 2.5 0 0 0 2.5-2.5v-15A2.5 2.5 0 0 0 17.5 2h-11ZM10 4.2h4v1.1h-4V4.2Zm2 15.8a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8Z"
+      />
     </svg>
   )
 }
@@ -200,7 +210,7 @@ function CoinIcon(props) {
     <svg {...iconProps} {...props}>
       <path
         fillRule="evenodd"
-        d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z"
+        d="M12 1.5A10.5 10.5 0 1 0 12 22.5 10.5 10.5 0 0 0 12 1.5Zm0 2.6a7.9 7.9 0 1 0 0 15.8 7.9 7.9 0 0 0 0-15.8Zm.9 2.9v1c1.3.3 2.2 1.2 2.3 2.4h-1.8c-.1-.5-.5-.8-1.1-.9v2c1.5.4 2.9 1 2.9 2.7 0 1.2-.9 2.1-2.2 2.4v1h-1.8v-1c-1.3-.3-2.2-1.2-2.3-2.4h1.8c.1.5.5.8 1.1.9v-2c-1.5-.4-2.8-1-2.8-2.7 0-1.2.8-2.1 2.1-2.4v-1h1.8Zm-1 3c-.5.1-.7.4-.7.7 0 .4.3.6.7.8v-1.5Zm.9 4v1.6c.6-.1.9-.4.9-.8 0-.4-.3-.6-.9-.8Z"
       />
     </svg>
   )

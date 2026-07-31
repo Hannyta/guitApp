@@ -582,18 +582,45 @@ select {
 .category-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
   color: white;
   font-size: 0.8rem;
-  border: none;
-  font-family: inherit;
-  cursor: pointer;
 }
 
-.category-badge:hover {
-  filter: brightness(1.1);
+.category-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.category-chip-button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.category-chip-button:hover .category-name {
+  text-decoration: underline;
+}
+
+.category-icon-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.category-name {
+  color: var(--text-primary);
+  font-size: 0.9rem;
 }
 
 .modal-overlay {
@@ -652,7 +679,7 @@ select {
   border-bottom: 1px solid var(--gridline);
 }
 
-.modal-transaction-list .category-badge {
+.modal-transaction-list .category-chip {
   flex-shrink: 0;
   white-space: nowrap;
 }
@@ -675,23 +702,51 @@ select {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: none;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 999px;
+  background: var(--gridline);
   color: var(--text-secondary);
   padding: 0;
 }
 
+.icon-button svg {
+  width: 15px;
+  height: 15px;
+}
+
 .icon-button:hover {
-  background: var(--page);
+  background: var(--baseline);
   color: var(--text-primary);
 }
 
-.icon-button-danger:hover {
+.icon-button-danger {
+  background: rgba(227, 73, 72, 0.12);
   color: var(--expense);
-  border-color: var(--expense);
+}
+
+.icon-button-danger:hover {
+  background: rgba(227, 73, 72, 0.22);
+  color: var(--expense);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme='light'])) .icon-button-danger {
+    background: rgba(230, 103, 103, 0.16);
+  }
+
+  :root:where(:not([data-theme='light'])) .icon-button-danger:hover {
+    background: rgba(230, 103, 103, 0.28);
+  }
+}
+
+:root[data-theme='dark'] .icon-button-danger {
+  background: rgba(230, 103, 103, 0.16);
+}
+
+:root[data-theme='dark'] .icon-button-danger:hover {
+  background: rgba(230, 103, 103, 0.28);
 }
 
 /* Budgets */

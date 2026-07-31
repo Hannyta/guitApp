@@ -13,7 +13,7 @@ export function useBudgets() {
 
     const { data, error: fetchError } = await supabase
       .from('budgets')
-      .select('*, category:categories(id, name, type, color)')
+      .select('*, category:categories(id, name, type, color, icon)')
       .order('year', { ascending: false })
       .order('month', { ascending: false })
 

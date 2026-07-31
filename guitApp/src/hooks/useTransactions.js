@@ -13,7 +13,7 @@ export function useTransactions() {
 
     const { data, error: fetchError } = await supabase
       .from('transactions')
-      .select('*, category:categories(id, name, type, color)')
+      .select('*, category:categories(id, name, type, color, icon)')
       .order('occurred_on', { ascending: false })
 
     if (fetchError) {

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useCategories } from '../hooks/useCategories'
 import { CategoryForm } from '../components/categories/CategoryForm'
-import { CategoryIcon } from '../components/categories/CategoryIcon'
+import { CategoryBadge } from '../components/categories/CategoryBadge'
 import { TrashIcon } from '../components/icons/TrashIcon'
 
 export function CategoriesPage() {
@@ -30,10 +30,7 @@ export function CategoriesPage() {
         <ul className="categories-list">
           {categories.map((category) => (
             <li key={category.id} className="categories-list-item">
-              <span className="category-badge" style={{ backgroundColor: category.color }}>
-                <CategoryIcon icon={category.icon} />
-                {category.name}
-              </span>
+              <CategoryBadge category={category} />
               <span className="category-type-label">
                 {category.type === 'income' ? 'Ingreso' : 'Gasto'}
               </span>

@@ -1,17 +1,8 @@
 export function CloseIcon(props) {
   return (
-    <svg
-      viewBox="0 0 20 20"
-      width="16"
-      height="16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      aria-hidden="true"
-      {...props}
-    >
-      <path d="M5 5l10 10M15 5 5 15" />
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" {...props}>
+      <rect x="11" y="3" width="2" height="18" rx="1" transform="rotate(45 12 12)" />
+      <rect x="11" y="3" width="2" height="18" rx="1" transform="rotate(-45 12 12)" />
     </svg>
   )
 }

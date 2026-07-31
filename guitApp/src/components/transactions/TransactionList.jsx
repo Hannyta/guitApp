@@ -1,7 +1,7 @@
 import { useCurrency } from '../../hooks/useCurrency'
 import { PencilIcon } from '../icons/PencilIcon'
 import { TrashIcon } from '../icons/TrashIcon'
-import { CategoryIcon } from '../categories/CategoryIcon'
+import { CategoryBadge } from '../categories/CategoryBadge'
 
 const dateFormatter = new Intl.DateTimeFormat('es', { day: '2-digit', month: 'short', year: 'numeric' })
 
@@ -28,15 +28,7 @@ export function TransactionList({ transactions, onCategoryClick, onEdit, onDelet
           <tr key={transaction.id}>
             <td>{dateFormatter.format(new Date(`${transaction.occurred_on}T00:00:00`))}</td>
             <td>
-              <button
-                type="button"
-                className="category-badge"
-                style={{ backgroundColor: transaction.category?.color ?? '#6b7280' }}
-                onClick={() => onCategoryClick(transaction.category)}
-              >
-                <CategoryIcon icon={transaction.category?.icon} />
-                {transaction.category?.name ?? 'Sin categoría'}
-              </button>
+              <CategoryBadge category={transaction.category} onClick={() => onCategoryClick(transaction.category)} />
             </td>
             <td>{transaction.description || '—'}</td>
             <td className={transaction.type === 'income' ? 'amount-income' : 'amount-expense'}>
