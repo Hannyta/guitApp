@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { AmountInput } from '../shared/AmountInput'
 
 const now = new Date()
 
@@ -6,7 +7,7 @@ export function BudgetForm({ categories, onSubmit, editingBudget = null, onCance
   const [categoryId, setCategoryId] = useState(editingBudget?.category_id ?? '')
   const [year, setYear] = useState(editingBudget?.year ?? now.getFullYear())
   const [month, setMonth] = useState(editingBudget?.month ?? now.getMonth() + 1)
-  const [amount, setAmount] = useState(editingBudget ? String(editingBudget.amount) : '')
+  const [amount, setAmount] = useState(editingBudget ? editingBudget.amount : '')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
 
@@ -15,6 +16,10 @@ export function BudgetForm({ categories, onSubmit, editingBudget = null, onCance
     const selectedCategory = categoryId || categories[0]?.id
     if (!selectedCategory) {
       setError('Primero crea una categoría de gasto.')
+      return
+    }
+    if (!amount || Number(amount) <= 0) {
+      setError('Ingresá un monto mayor a 0.')
       return
     }
 
@@ -74,14 +79,7 @@ export function BudgetForm({ categories, onSubmit, editingBudget = null, onCance
 
       <label>
         Monto límite
-        <input
-          type="number"
-          min="0.01"
-          step="0.01"
-          value={amount}
-          onChange={(event) => setAmount(event.target.value)}
-          required
-        />
+        <AmountInput value={amount} onChange={setAmount} required />
       </label>
 
       <div className="form-actions">

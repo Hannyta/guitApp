@@ -104,9 +104,10 @@ export function SignupPage() {
           </form>
         </div>
         <p className="auth-legal">
-          Al registrarte o conectarte con los servicios anteriores aceptas nuestros Términos de
-          servicio y reconocés nuestra Política de privacidad que describe cómo manejamos tus
-          datos personales.
+          Al registrarte o conectarte con los servicios anteriores aceptas nuestros{' '}
+          <Link to="/terms">Términos de servicio</Link> y reconocés nuestra{' '}
+          <Link to="/privacy">Política de privacidad</Link> que describe cómo manejamos tus datos
+          personales.
         </p>
       </div>
     </div>

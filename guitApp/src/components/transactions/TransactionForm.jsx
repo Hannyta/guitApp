@@ -1,13 +1,12 @@
 import { useMemo, useState } from 'react'
+import { AmountInput } from '../shared/AmountInput'
 
 const today = () => new Date().toISOString().slice(0, 10)
 
 export function TransactionForm({ categories, onSubmit, editingTransaction = null, onCancel }) {
   const [type, setType] = useState(editingTransaction?.type ?? 'expense')
   const [categoryId, setCategoryId] = useState(editingTransaction?.category_id ?? '')
-  const [amount, setAmount] = useState(
-    editingTransaction ? String(editingTransaction.amount) : '',
-  )
+  const [amount, setAmount] = useState(editingTransaction ? editingTransaction.amount : '')
   const [description, setDescription] = useState(editingTransaction?.description ?? '')
   const [occurredOn, setOccurredOn] = useState(editingTransaction?.occurred_on ?? today())
   const [submitting, setSubmitting] = useState(false)
@@ -23,6 +22,10 @@ export function TransactionForm({ categories, onSubmit, editingTransaction = nul
     const selectedCategory = categoryId || filteredCategories[0]?.id
     if (!selectedCategory) {
       setError('Primero crea una categoría de este tipo.')
+      return
+    }
+    if (!amount || Number(amount) <= 0) {
+      setError('Ingresá un monto mayor a 0.')
       return
     }
 
@@ -91,14 +94,7 @@ export function TransactionForm({ categories, onSubmit, editingTransaction = nul
 
       <label>
         Monto
-        <input
-          type="number"
-          min="0.01"
-          step="0.01"
-          value={amount}
-          onChange={(event) => setAmount(event.target.value)}
-          required
-        />
+        <AmountInput value={amount} onChange={setAmount} required />
       </label>
 
       <label>

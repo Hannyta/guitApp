@@ -2,7 +2,6 @@ import { NavLink, Outlet } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { useAutoDetectLocale } from '../../hooks/useAutoDetectLocale'
 import { CurrencySelector } from './CurrencySelector'
-import { CountrySelector } from './CountrySelector'
 import { Brand } from '../branding/Brand'
 
 export function AppLayout() {
@@ -22,7 +21,6 @@ export function AppLayout() {
           <NavLink to="/categories">Categorías</NavLink>
         </nav>
         <div className="app-user">
-          <CountrySelector />
           <CurrencySelector />
           <span>{user?.email}</span>
           <button type="button" onClick={() => signOut()}>

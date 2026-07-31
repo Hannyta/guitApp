@@ -227,6 +227,70 @@ select {
   padding-top: 1.5rem;
 }
 
+.auth-legal a {
+  color: var(--income);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.auth-legal a:hover {
+  text-decoration: none;
+}
+
+/* Legal pages */
+.legal-page {
+  min-height: 100vh;
+  background: var(--page);
+}
+
+.legal-page-header {
+  padding: 1.25rem 1.5rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.legal-page-brand {
+  display: inline-flex;
+  text-decoration: none;
+}
+
+.legal-page-content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.legal-page-content h1 {
+  font-size: 1.8rem;
+  margin: 0 0 0.5rem;
+}
+
+.legal-page-updated {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0 0 2rem;
+}
+
+.legal-page-content h2 {
+  font-size: 1.1rem;
+  margin: 2rem 0 0.5rem;
+}
+
+.legal-page-content p,
+.legal-page-content li {
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.legal-page-content ul {
+  padding-left: 1.25rem;
+}
+
+.legal-page-content a {
+  color: var(--income);
+  font-weight: 600;
+}
+
 @media (max-width: 900px) {
   .auth-hero {
     display: none;
@@ -260,6 +324,16 @@ select {
   border-radius: 6px;
   padding: 0.6rem;
   font-weight: 600;
+}
+
+.auth-form a {
+  color: var(--income);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.auth-form a:hover {
+  text-decoration: none;
 }
 
 .oauth-buttons {
@@ -646,9 +720,9 @@ select {
 }
 
 .type-toggle button.active {
-  background: var(--text-primary);
-  color: var(--surface);
-  border-color: var(--text-primary);
+  background: var(--income);
+  color: white;
+  border-color: var(--income);
 }
 
 .transactions-section,
@@ -953,4 +1027,162 @@ select {
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+/* Onboarding */
+.onboarding-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--page);
+}
+
+.onboarding-steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.5rem 3rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.onboarding-step {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.onboarding-step.active {
+  color: var(--text-primary);
+}
+
+.onboarding-step-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 2px solid var(--border);
+  color: var(--muted);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.onboarding-step.active .onboarding-step-circle {
+  border-color: var(--income);
+  color: var(--income);
+}
+
+.onboarding-step.done .onboarding-step-circle {
+  background: var(--income);
+  border-color: var(--income);
+  color: white;
+}
+
+.onboarding-step-line {
+  flex: 1;
+  height: 1px;
+  background: var(--gridline);
+}
+
+.onboarding-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.onboarding-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 132px;
+  height: 132px;
+  border-radius: 999px;
+  background: var(--income);
+  color: white;
+}
+
+.onboarding-content h1 {
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+.onboarding-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+  max-width: 320px;
+  text-align: left;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.onboarding-hint {
+  max-width: 380px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .onboarding-steps {
+    padding: 1.25rem 1.25rem;
+    gap: 0.5rem;
+  }
+
+  .onboarding-step-label {
+    display: none;
+  }
+
+  .onboarding-content {
+    width: 100%;
+    padding: 1.75rem 1.25rem;
+  }
+
+  .onboarding-icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .onboarding-content h1 {
+    font-size: 1.35rem;
+  }
+
+  .onboarding-actions {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .onboarding-actions button {
+    flex: 1;
+  }
+}
+
+.onboarding-button {
+  background: var(--income);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.onboarding-actions {
+  display: flex;
+  gap: 0.75rem;
 }
