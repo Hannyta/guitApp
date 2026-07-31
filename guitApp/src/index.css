@@ -244,8 +244,13 @@ select {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.75rem;
   margin-bottom: 1rem;
+}
+
+.period-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .period-toggle {
@@ -338,7 +343,8 @@ select {
 
 /* Forms */
 .transactions-page,
-.budgets-page {
+.budgets-page,
+.categories-page {
   display: grid;
   grid-template-columns: minmax(260px, 320px) 1fr;
   gap: 1.5rem;
@@ -346,7 +352,8 @@ select {
 }
 
 .transaction-form,
-.budget-form {
+.budget-form,
+.category-form {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -357,13 +364,15 @@ select {
 }
 
 .transaction-form h2,
-.budget-form h2 {
+.budget-form h2,
+.category-form h2 {
   font-size: 1.05rem;
   margin: 0;
 }
 
 .transaction-form label,
-.budget-form label {
+.budget-form label,
+.category-form label {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
@@ -372,13 +381,80 @@ select {
 }
 
 .transaction-form button[type='submit'],
-.budget-form button[type='submit'] {
+.budget-form button[type='submit'],
+.category-form button[type='submit'] {
   background: var(--income);
   color: white;
   border: none;
   border-radius: 6px;
   padding: 0.6rem;
   font-weight: 600;
+}
+
+.picker-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.picker-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.color-swatch-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.color-swatch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  padding: 0;
+  cursor: pointer;
+  color: white;
+}
+
+.color-swatch.active {
+  border-color: var(--text-primary);
+}
+
+.color-swatch-check {
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+.icon-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  gap: 0.5rem;
+}
+
+.icon-picker-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 999px;
+  background: var(--muted);
+  color: white;
+  cursor: pointer;
+}
+
+.icon-picker-button:hover {
+  filter: brightness(1.1);
+}
+
+.icon-picker-button.active {
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--text-primary);
 }
 
 .form-actions {
@@ -434,7 +510,8 @@ select {
 }
 
 .transactions-section,
-.budgets-section {
+.budgets-section,
+.categories-section {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -442,9 +519,45 @@ select {
 }
 
 .transactions-section h2,
-.budgets-section h2 {
+.budgets-section h2,
+.categories-section h2 {
   font-size: 1.05rem;
   margin: 0 0 0.75rem;
+}
+
+.categories-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.categories-list-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--gridline);
+}
+
+.category-type-label {
+  color: var(--muted);
+  font-size: 0.8rem;
+  flex: 1;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.section-header h2 {
+  margin: 0;
 }
 
 .transaction-table {
@@ -467,7 +580,9 @@ select {
 }
 
 .category-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
   color: white;
@@ -628,11 +743,17 @@ select {
 
 @media (max-width: 720px) {
   .transactions-page,
-  .budgets-page {
+  .budgets-page,
+  .categories-page {
     grid-template-columns: 1fr;
   }
 
   .chart-grid {
     grid-template-columns: 1fr;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

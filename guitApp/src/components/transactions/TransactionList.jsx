@@ -1,6 +1,7 @@
 import { useCurrency } from '../../hooks/useCurrency'
 import { PencilIcon } from '../icons/PencilIcon'
 import { TrashIcon } from '../icons/TrashIcon'
+import { CategoryIcon } from '../categories/CategoryIcon'
 
 const dateFormatter = new Intl.DateTimeFormat('es', { day: '2-digit', month: 'short', year: 'numeric' })
 
@@ -8,7 +9,7 @@ export function TransactionList({ transactions, onCategoryClick, onEdit, onDelet
   const { format } = useCurrency()
 
   if (transactions.length === 0) {
-    return <p className="empty-state">Todavía no hay movimientos registrados.</p>
+    return <p className="empty-state">No hay movimientos en este período.</p>
   }
 
   return (
@@ -33,6 +34,7 @@ export function TransactionList({ transactions, onCategoryClick, onEdit, onDelet
                 style={{ backgroundColor: transaction.category?.color ?? '#6b7280' }}
                 onClick={() => onCategoryClick(transaction.category)}
               >
+                <CategoryIcon icon={transaction.category?.icon} />
                 {transaction.category?.name ?? 'Sin categoría'}
               </button>
             </td>

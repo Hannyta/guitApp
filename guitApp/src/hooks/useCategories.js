@@ -68,10 +68,10 @@ export function useCategories() {
   }, [fetchCategories])
 
   const addCategory = useCallback(
-    async ({ name, type, color }) => {
+    async ({ name, type, color, icon }) => {
       const { error: insertError } = await supabase
         .from('categories')
-        .insert({ name, type, color, user_id: user.id })
+        .insert({ name, type, color, icon, user_id: user.id })
       if (insertError) throw insertError
       await fetchCategories()
     },

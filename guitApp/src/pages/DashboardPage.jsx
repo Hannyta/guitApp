@@ -1,47 +1,26 @@
-import { useMemo, useState } from 'react'
-import dayjs from 'dayjs'
+import { useMemo } from 'react'
 import { useTransactions } from '../hooks/useTransactions'
 import { useBudgets } from '../hooks/useBudgets'
 import { useCurrency } from '../hooks/useCurrency'
 import { useTransactionsModal } from '../hooks/useTransactionsModal'
-import {
-  availableMonthsFromTransactions,
-  availableYearsFromTransactions,
-  isInPeriod,
-  monthKey,
-} from '../lib/dateHelpers'
+import { usePeriodSelector } from '../hooks/usePeriodSelector'
+import { availableMonthsFromTransactions, availableYearsFromTransactions, isInPeriod } from '../lib/dateHelpers'
 import { CategoryBreakdownChart } from '../components/charts/CategoryBreakdownChart'
 import { MonthlyTrendChart } from '../components/charts/MonthlyTrendChart'
 import { BudgetVsActualChart } from '../components/charts/BudgetVsActualChart'
 import { TransactionsModal } from '../components/shared/TransactionsModal'
+import { PeriodSelector } from '../components/shared/PeriodSelector'
 
 export function DashboardPage() {
   const { transactions, loading: transactionsLoading } = useTransactions()
   const { budgets, loading: budgetsLoading } = useBudgets()
   const { format } = useCurrency()
   const { modalData, openTransactionsModal, closeTransactionsModal } = useTransactionsModal()
-  const [periodMode, setPeriodMode] = useState('month')
-  const [selectedMonthKey, setSelectedMonthKey] = useState(null)
-  const [selectedYear, setSelectedYear] = useState(null)
 
   const availableMonths = useMemo(() => availableMonthsFromTransactions(transactions), [transactions])
   const availableYears = useMemo(() => availableYearsFromTransactions(transactions), [transactions])
-
-  const now = dayjs()
-  const fallbackMonth = {
-    key: monthKey(now.year(), now.month() + 1),
-    year: now.year(),
-    month: now.month() + 1,
-    label: 'este mes',
-  }
-  const activeMonthEntry =
-    availableMonths.find((entry) => entry.key === selectedMonthKey) ?? availableMonths[0] ?? fallbackMonth
-  const activeYear = selectedYear ?? availableYears[0]?.year ?? now.year()
-
-  const activePeriod =
-    periodMode === 'month'
-      ? { year: activeMonthEntry.year, month: activeMonthEntry.month, label: activeMonthEntry.label }
-      : { year: activeYear, month: null, label: String(activeYear) }
+  const period = usePeriodSelector(availableMonths, availableYears)
+  const { activePeriod } = period
 
   const summary = useMemo(() => {
     const periodTransactions = transactions.filter((t) =>
@@ -61,73 +40,22 @@ export function DashboardPage() {
 
   function handleCategorySelect(category) {
     openTransactionsModal({
-      title: category.name,
+      title: `${category.name} · ${activePeriod.label}`,
       badgeColor: category.color,
-      transactions: transactions.filter((transaction) => transaction.category_id === category.id),
+      transactions: transactions.filter(
+        (transaction) =>
+          transaction.category_id === category.id &&
+          isInPeriod(transaction.occurred_on, activePeriod.year, activePeriod.month),
+      ),
     })
   }
 
-  const periodNoun = periodMode === 'month' ? 'mes' : 'año'
+  const periodNoun = period.periodMode === 'month' ? 'mes' : 'año'
 
   return (
     <div className="dashboard-page">
       <div className="dashboard-toolbar">
-        <div className="type-toggle period-toggle">
-          <button
-            type="button"
-            className={periodMode === 'month' ? 'active' : ''}
-            onClick={() => setPeriodMode('month')}
-          >
-            Mes
-          </button>
-          <button
-            type="button"
-            className={periodMode === 'year' ? 'active' : ''}
-            onClick={() => setPeriodMode('year')}
-          >
-            Año
-          </button>
-        </div>
-
-        {periodMode === 'month' ? (
-          <label className="month-select-label">
-            Mes
-            <select
-              value={activeMonthEntry.key}
-              onChange={(event) => setSelectedMonthKey(event.target.value)}
-              disabled={availableMonths.length === 0}
-            >
-              {availableMonths.length === 0 ? (
-                <option value={fallbackMonth.key}>Sin movimientos todavía</option>
-              ) : (
-                availableMonths.map((entry) => (
-                  <option key={entry.key} value={entry.key}>
-                    {entry.label}
-                  </option>
-                ))
-              )}
-            </select>
-          </label>
-        ) : (
-          <label className="month-select-label">
-            Año
-            <select
-              value={activeYear}
-              onChange={(event) => setSelectedYear(Number(event.target.value))}
-              disabled={availableYears.length === 0}
-            >
-              {availableYears.length === 0 ? (
-                <option value={activeYear}>Sin movimientos todavía</option>
-              ) : (
-                availableYears.map((entry) => (
-                  <option key={entry.year} value={entry.year}>
-                    {entry.label}
-                  </option>
-                ))
-              )}
-            </select>
-          </label>
-        )}
+        <PeriodSelector period={period} />
       </div>
 
       <section className="summary-cards">

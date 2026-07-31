@@ -1,12 +1,13 @@
 import { useCurrency } from '../../hooks/useCurrency'
 import { PencilIcon } from '../icons/PencilIcon'
 import { TrashIcon } from '../icons/TrashIcon'
+import { CategoryIcon } from '../categories/CategoryIcon'
 
 export function BudgetProgress({ budgets, transactions, onCategoryClick, onEdit, onDelete }) {
   const { format } = useCurrency()
 
   if (budgets.length === 0) {
-    return <p className="empty-state">Todavía no hay presupuestos definidos.</p>
+    return <p className="empty-state">No hay presupuestos en este período.</p>
   }
 
   return (
@@ -34,6 +35,7 @@ export function BudgetProgress({ budgets, transactions, onCategoryClick, onEdit,
                 style={{ backgroundColor: budget.category?.color ?? '#6b7280' }}
                 onClick={() => onCategoryClick(budget.category)}
               >
+                <CategoryIcon icon={budget.category?.icon} />
                 {budget.category?.name ?? 'Sin categoría'}
               </button>
               <span>

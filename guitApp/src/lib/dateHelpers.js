@@ -23,29 +23,45 @@ export function monthKey(year, month) {
   return `${year}-${month}`
 }
 
-export function availableMonthsFromTransactions(transactions) {
-  const monthsByKey = new Map()
+function monthLabel(year, month) {
+  const label = dayjs(`${year}-${month}-01`).format('MMMM YYYY')
+  return label[0].toUpperCase() + label.slice(1)
+}
 
-  transactions.forEach((transaction) => {
-    const date = dayjs(transaction.occurred_on)
-    const year = date.year()
-    const month = date.month() + 1
+export function uniqueMonths(pairs) {
+  const byKey = new Map()
+  pairs.forEach(({ year, month }) => {
     const key = monthKey(year, month)
-    if (!monthsByKey.has(key)) {
-      const label = date.format('MMMM YYYY')
-      monthsByKey.set(key, { key, year, month, label: label[0].toUpperCase() + label.slice(1) })
+    if (!byKey.has(key)) {
+      byKey.set(key, { key, year, month, label: monthLabel(year, month) })
     }
   })
+  return Array.from(byKey.values()).sort((a, b) => (a.year !== b.year ? b.year - a.year : b.month - a.month))
+}
 
-  return Array.from(monthsByKey.values()).sort((a, b) =>
-    a.year !== b.year ? b.year - a.year : b.month - a.month,
+export function uniqueYears(years) {
+  return Array.from(new Set(years))
+    .sort((a, b) => b - a)
+    .map((year) => ({ year, label: String(year) }))
+}
+
+export function availableMonthsFromTransactions(transactions) {
+  return uniqueMonths(
+    transactions.map((transaction) => {
+      const date = dayjs(transaction.occurred_on)
+      return { year: date.year(), month: date.month() + 1 }
+    }),
   )
 }
 
 export function availableYearsFromTransactions(transactions) {
-  const years = new Set()
-  transactions.forEach((transaction) => years.add(dayjs(transaction.occurred_on).year()))
-  return Array.from(years)
-    .sort((a, b) => b - a)
-    .map((year) => ({ year, label: String(year) }))
+  return uniqueYears(transactions.map((transaction) => dayjs(transaction.occurred_on).year()))
+}
+
+export function availableMonthsFromBudgets(budgets) {
+  return uniqueMonths(budgets.map((budget) => ({ year: budget.year, month: budget.month })))
+}
+
+export function availableYearsFromBudgets(budgets) {
+  return uniqueYears(budgets.map((budget) => budget.year))
 }

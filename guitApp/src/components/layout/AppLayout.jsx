@@ -16,6 +16,7 @@ export function AppLayout() {
           </NavLink>
           <NavLink to="/transactions">Movimientos</NavLink>
           <NavLink to="/budgets">Presupuestos</NavLink>
+          <NavLink to="/categories">Categorías</NavLink>
         </nav>
         <div className="app-user">
           <CurrencySelector />

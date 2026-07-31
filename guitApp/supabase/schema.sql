@@ -6,6 +6,7 @@ create table if not exists public.categories (
   name text not null,
   type text not null check (type in ('income', 'expense')),
   color text not null default '#6b7280',
+  icon text not null default 'tag',
   created_at timestamptz not null default now(),
   unique (user_id, name)
 );

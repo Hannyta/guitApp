@@ -8,6 +8,7 @@ import { SignupPage } from './pages/SignupPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { TransactionsPage } from './pages/TransactionsPage'
 import { BudgetsPage } from './pages/BudgetsPage'
+import { CategoriesPage } from './pages/CategoriesPage'
 
 function PublicOnlyRoute({ children }) {
   const { user, loading } = useAuth()
@@ -40,6 +41,7 @@ function AppRoutes() {
           <Route path="/" element={<DashboardPage />} />
           <Route path="/transactions" element={<TransactionsPage />} />
           <Route path="/budgets" element={<BudgetsPage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
