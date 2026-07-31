@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "git-commit-organizer": {
+      "source": "webreactiva/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/git-commit-organizer/SKILL.md",
+      "computedHash": "e8fff1bb5f3feeb58e3e0efc4aa531fe0058429bcc04feb2f3f7a73bc29878d8"
+    }
+  }
+}

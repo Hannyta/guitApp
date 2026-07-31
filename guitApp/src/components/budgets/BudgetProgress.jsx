@@ -2,7 +2,7 @@ import { useCurrency } from '../../hooks/useCurrency'
 import { PencilIcon } from '../icons/PencilIcon'
 import { TrashIcon } from '../icons/TrashIcon'
 
-export function BudgetProgress({ budgets, transactions, onEdit, onDelete }) {
+export function BudgetProgress({ budgets, transactions, onCategoryClick, onEdit, onDelete }) {
   const { format } = useCurrency()
 
   if (budgets.length === 0) {
@@ -28,12 +28,14 @@ export function BudgetProgress({ budgets, transactions, onEdit, onDelete }) {
         return (
           <li key={budget.id} className="budget-progress-item">
             <div className="budget-progress-header">
-              <span
+              <button
+                type="button"
                 className="category-badge"
                 style={{ backgroundColor: budget.category?.color ?? '#6b7280' }}
+                onClick={() => onCategoryClick(budget.category)}
               >
                 {budget.category?.name ?? 'Sin categoría'}
-              </span>
+              </button>
               <span>
                 {budget.month}/{budget.year}
               </span>

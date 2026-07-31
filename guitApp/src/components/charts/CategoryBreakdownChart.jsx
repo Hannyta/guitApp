@@ -1,45 +1,53 @@
 import '../../lib/chartSetup'
 import { useMemo } from 'react'
 import { Doughnut } from 'react-chartjs-2'
-import dayjs from 'dayjs'
 import { chartTheme, useIsDarkMode } from '../../lib/chartTheme'
 import { useCurrency } from '../../hooks/useCurrency'
+import { isInPeriod } from '../../lib/dateHelpers'
 
-export function CategoryBreakdownChart({ transactions }) {
+export function CategoryBreakdownChart({ transactions, year, month, onCategorySelect }) {
   const isDark = useIsDarkMode()
   const theme = isDark ? chartTheme.dark : chartTheme.light
   const { format } = useCurrency()
 
-  const { labels, values, colors, total } = useMemo(() => {
-    const now = dayjs()
+  const { labels, values, colors, categories, total } = useMemo(() => {
     const totalsByCategory = new Map()
 
     transactions
       .filter(
-        (transaction) =>
-          transaction.type === 'expense' &&
-          dayjs(transaction.occurred_on).year() === now.year() &&
-          dayjs(transaction.occurred_on).month() === now.month(),
+        (transaction) => transaction.type === 'expense' && isInPeriod(transaction.occurred_on, year, month),
       )
       .forEach((transaction) => {
-        const key = transaction.category?.name ?? 'Sin categoría'
-        const color = transaction.category?.color ?? '#898781'
-        const current = totalsByCategory.get(key) ?? { amount: 0, color }
+        const key = transaction.category_id ?? 'none'
+        const current = totalsByCategory.get(key) ?? {
+          id: transaction.category_id,
+          name: transaction.category?.name ?? 'Sin categoría',
+          color: transaction.category?.color ?? '#898781',
+          type: 'expense',
+          amount: 0,
+        }
         current.amount += Number(transaction.amount)
         totalsByCategory.set(key, current)
       })
 
-    const entries = Array.from(totalsByCategory.entries())
+    const entries = Array.from(totalsByCategory.values())
     return {
-      labels: entries.map(([name]) => name),
-      values: entries.map(([, value]) => value.amount),
-      colors: entries.map(([, value]) => value.color),
-      total: entries.reduce((sum, [, value]) => sum + value.amount, 0),
+      labels: entries.map((entry) => entry.name),
+      values: entries.map((entry) => entry.amount),
+      colors: entries.map((entry) => entry.color),
+      categories: entries,
+      total: entries.reduce((sum, entry) => sum + entry.amount, 0),
     }
-  }, [transactions])
+  }, [transactions, year, month])
 
   if (labels.length === 0) {
-    return <p className="empty-state">No hay gastos este mes todavía.</p>
+    return <p className="empty-state">No hay gastos en este período.</p>
+  }
+
+  function handleSelect(index) {
+    if (onCategorySelect && categories[index]) {
+      onCategorySelect(categories[index])
+    }
   }
 
   return (
@@ -56,10 +64,17 @@ export function CategoryBreakdownChart({ transactions }) {
         ],
       }}
       options={{
+        onClick: (_event, elements) => {
+          if (elements.length > 0) handleSelect(elements[0].index)
+        },
+        onHover: (event, elements) => {
+          event.native.target.style.cursor = elements.length > 0 ? 'pointer' : 'default'
+        },
         plugins: {
           legend: {
             position: 'bottom',
             labels: { color: theme.textSecondary, boxWidth: 12 },
+            onClick: (_event, legendItem) => handleSelect(legendItem.index),
           },
           tooltip: {
             callbacks: {
@@ -68,6 +83,7 @@ export function CategoryBreakdownChart({ transactions }) {
                 const percentage = total > 0 ? Math.round((value / total) * 100) : 0
                 return ` ${context.label}: ${format(value)} (${percentage}%)`
               },
+              footer: () => (onCategorySelect ? 'Click para ver los movimientos' : ''),
             },
           },
         },

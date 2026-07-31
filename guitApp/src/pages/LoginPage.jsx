@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import { Brand } from '../components/branding/Brand'
 
 export function LoginPage() {
   const { signIn } = useAuth()
@@ -27,6 +28,7 @@ export function LoginPage() {
 
   return (
     <div className="auth-page">
+      <Brand size={56} withTagline />
       <form className="auth-form" onSubmit={handleSubmit}>
         <h1>Iniciar sesión</h1>
         {error && <p className="form-error">{error}</p>}

@@ -5,7 +5,7 @@ import { chartTheme, useIsDarkMode } from '../../lib/chartTheme'
 import { isSameMonth, lastNMonths } from '../../lib/dateHelpers'
 import { useCurrency } from '../../hooks/useCurrency'
 
-const INCOME_COLOR = '#2a78d6'
+const INCOME_COLOR = '#0ea968'
 const EXPENSE_COLOR = '#e34948'
 
 export function MonthlyTrendChart({ transactions }) {

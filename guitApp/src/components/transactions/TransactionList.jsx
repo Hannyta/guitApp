@@ -4,7 +4,7 @@ import { TrashIcon } from '../icons/TrashIcon'
 
 const dateFormatter = new Intl.DateTimeFormat('es', { day: '2-digit', month: 'short', year: 'numeric' })
 
-export function TransactionList({ transactions, onEdit, onDelete }) {
+export function TransactionList({ transactions, onCategoryClick, onEdit, onDelete }) {
   const { format } = useCurrency()
 
   if (transactions.length === 0) {
@@ -27,12 +27,14 @@ export function TransactionList({ transactions, onEdit, onDelete }) {
           <tr key={transaction.id}>
             <td>{dateFormatter.format(new Date(`${transaction.occurred_on}T00:00:00`))}</td>
             <td>
-              <span
+              <button
+                type="button"
                 className="category-badge"
                 style={{ backgroundColor: transaction.category?.color ?? '#6b7280' }}
+                onClick={() => onCategoryClick(transaction.category)}
               >
                 {transaction.category?.name ?? 'Sin categoría'}
-              </span>
+              </button>
             </td>
             <td>{transaction.description || '—'}</td>
             <td className={transaction.type === 'income' ? 'amount-income' : 'amount-expense'}>

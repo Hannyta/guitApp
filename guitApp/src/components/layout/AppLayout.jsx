@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { CurrencySelector } from './CurrencySelector'
+import { Brand } from '../branding/Brand'
 
 export function AppLayout() {
   const { user, signOut } = useAuth()
@@ -8,7 +9,7 @@ export function AppLayout() {
   return (
     <div className="app-shell">
       <header className="app-header">
-        <span className="app-title">Finanzas</span>
+        <Brand size={30} />
         <nav className="app-nav">
           <NavLink to="/" end>
             Dashboard

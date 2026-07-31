@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useCategories } from '../hooks/useCategories'
 import { useTransactions } from '../hooks/useTransactions'
+import { useTransactionsModal } from '../hooks/useTransactionsModal'
 import { TransactionForm } from '../components/transactions/TransactionForm'
 import { TransactionList } from '../components/transactions/TransactionList'
+import { TransactionsModal } from '../components/shared/TransactionsModal'
 
 export function TransactionsPage() {
   const { categories, loading: categoriesLoading } = useCategories()
@@ -14,6 +16,7 @@ export function TransactionsPage() {
     deleteTransaction,
   } = useTransactions()
   const [editingTransaction, setEditingTransaction] = useState(null)
+  const { modalData, openTransactionsModal, closeTransactionsModal } = useTransactionsModal()
 
   if (categoriesLoading || transactionsLoading) {
     return <p className="page-loading">Cargando...</p>
@@ -26,6 +29,14 @@ export function TransactionsPage() {
     } else {
       await addTransaction(values)
     }
+  }
+
+  function handleCategoryClick(category) {
+    openTransactionsModal({
+      title: category.name,
+      badgeColor: category.color,
+      transactions: transactions.filter((transaction) => transaction.category_id === category.id),
+    })
   }
 
   return (
@@ -41,10 +52,12 @@ export function TransactionsPage() {
         <h2>Historial</h2>
         <TransactionList
           transactions={transactions}
+          onCategoryClick={handleCategoryClick}
           onEdit={setEditingTransaction}
           onDelete={deleteTransaction}
         />
       </section>
+      {modalData && <TransactionsModal {...modalData} onClose={closeTransactionsModal} />}
     </div>
   )
 }
