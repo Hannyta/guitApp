@@ -33,6 +33,9 @@ export function AppLayout() {
       <main className="app-content">
         <Outlet />
       </main>
+      <footer className="app-footer">
+        <span>© {new Date().getFullYear()} GuitApp</span> · <span>Todos los derechos reservados.</span>
+      </footer>
     </div>
   )
 }
