@@ -1,13 +1,13 @@
 import { AccountIcon } from './AccountIcon'
 
-export function AccountBadge({ account, onClick }) {
+export function AccountBadge({ account, onClick, hideCurrency = false }) {
   const content = (
     <>
       <span className="category-icon-circle" style={{ backgroundColor: account?.color ?? '#898781' }}>
         <AccountIcon icon={account?.icon} />
       </span>
       <span className="category-name">{account?.name ?? 'Sin cuenta'}</span>
-      {account?.currency && <span className="account-currency-tag">{account.currency}</span>}
+      {!hideCurrency && account?.currency && <span className="account-currency-tag">{account.currency}</span>}
     </>
   )
 

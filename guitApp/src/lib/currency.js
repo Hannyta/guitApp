@@ -18,5 +18,7 @@ export function formatAmount(amount, currencyCode) {
   return new Intl.NumberFormat('es', {
     style: 'currency',
     currency: currencyCode || DEFAULT_CURRENCY,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(amount)
 }

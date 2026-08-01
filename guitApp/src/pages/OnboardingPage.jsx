@@ -141,7 +141,7 @@ export function OnboardingPage() {
           <h1>Configura tu saldo</h1>
           <label className="onboarding-field">
             <strong>Saldo actual ({selectedCurrency})</strong>
-            <AmountInput value={balance} onChange={setBalance} placeholder="0" />
+            <AmountInput value={balance} onChange={setBalance} />
           </label>
           <p className="onboarding-hint">
             Ingresá cuánta plata tenés disponible en tu billetera. 

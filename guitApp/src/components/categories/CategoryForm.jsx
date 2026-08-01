@@ -18,6 +18,9 @@ export function CategoryForm({ onSubmit }) {
     try {
       await onSubmit({ name: name.trim(), type, color, icon })
       setName('')
+      setType('expense')
+      setColor(CATEGORY_COLOR_OPTIONS[0])
+      setIcon(CATEGORY_ICON_KEYS[0])
     } catch (submitError) {
       setError(submitError.message)
     } finally {
@@ -90,7 +93,7 @@ export function CategoryForm({ onSubmit }) {
               aria-pressed={key === icon}
               onClick={() => setIcon(key)}
             >
-              <CategoryIcon icon={key} width={22} height={22} />
+              <CategoryIcon icon={key} width={18} height={18} />
             </button>
           ))}
         </div>

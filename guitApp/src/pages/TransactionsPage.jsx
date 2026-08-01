@@ -23,6 +23,15 @@ export function TransactionsPage() {
   const [editingTransaction, setEditingTransaction] = useState(null)
   const { modalData, openTransactionsModal, closeTransactionsModal } = useTransactionsModal()
 
+  const mostUsedAccountId = useMemo(() => {
+    if (transactions.length === 0) return null
+    const counts = new Map()
+    for (const transaction of transactions) {
+      counts.set(transaction.account_id, (counts.get(transaction.account_id) ?? 0) + 1)
+    }
+    return [...counts.entries()].reduce((best, entry) => (entry[1] > best[1] ? entry : best))[0]
+  }, [transactions])
+
   const availableMonths = useMemo(() => availableMonthsFromTransactions(transactions), [transactions])
   const availableYears = useMemo(() => availableYearsFromTransactions(transactions), [transactions])
   const period = usePeriodSelector(availableMonths, availableYears)
@@ -60,6 +69,7 @@ export function TransactionsPage() {
         key={editingTransaction?.id ?? 'new'}
         categories={categories}
         accounts={accounts}
+        defaultAccountId={mostUsedAccountId}
         onSubmit={handleSubmit}
         editingTransaction={editingTransaction}
         onCancel={() => setEditingTransaction(null)}

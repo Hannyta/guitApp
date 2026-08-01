@@ -6,7 +6,7 @@ import { AccountBadge } from '../accounts/AccountBadge'
 
 const dateFormatter = new Intl.DateTimeFormat('es', { day: '2-digit', month: 'short', year: 'numeric' })
 
-export function TransactionList({ transactions, onCategoryClick, onEdit, onDelete }) {
+export function TransactionList({ transactions, onCategoryClick, onEdit, onDelete, showAccount = true }) {
   if (transactions.length === 0) {
     return <p className="empty-state">No hay movimientos en este período.</p>
   }
@@ -17,7 +17,7 @@ export function TransactionList({ transactions, onCategoryClick, onEdit, onDelet
         <tr>
           <th>Fecha</th>
           <th>Categoría</th>
-          <th>Cuenta</th>
+          {showAccount && <th>Cuenta</th>}
           <th>Descripción</th>
           <th>Monto</th>
           <th></th>
@@ -26,14 +26,18 @@ export function TransactionList({ transactions, onCategoryClick, onEdit, onDelet
       <tbody>
         {transactions.map((transaction) => (
           <tr key={transaction.id}>
-            <td>{dateFormatter.format(new Date(`${transaction.occurred_on}T00:00:00`))}</td>
+            <td className="transaction-table-small">
+              {dateFormatter.format(new Date(`${transaction.occurred_on}T00:00:00`))}
+            </td>
             <td>
               <CategoryBadge category={transaction.category} onClick={() => onCategoryClick(transaction.category)} />
             </td>
-            <td>
-              <AccountBadge account={transaction.account} />
-            </td>
-            <td>{transaction.description || '—'}</td>
+            {showAccount && (
+              <td className="transaction-table-small">
+                <AccountBadge account={transaction.account} hideCurrency />
+              </td>
+            )}
+            <td className="transaction-table-small">{transaction.description || '—'}</td>
             <td className={transaction.type === 'income' ? 'amount-income' : 'amount-expense'}>
               {transaction.type === 'income' ? '+' : '-'}
               {formatAmount(transaction.amount, transaction.account?.currency)}

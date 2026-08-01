@@ -5,12 +5,12 @@ import { ACCOUNT_ICON_KEYS } from '../../lib/accountIcons'
 import { useCurrency } from '../../hooks/useCurrency'
 import { AccountIcon } from './AccountIcon'
 
-export function AccountForm({ onSubmit }) {
+export function AccountForm({ onSubmit, editingAccount = null, onCancel }) {
   const { currency: baseCurrency } = useCurrency()
-  const [name, setName] = useState('')
-  const [currency, setCurrency] = useState(baseCurrency)
-  const [color, setColor] = useState(CATEGORY_COLOR_OPTIONS[0])
-  const [icon, setIcon] = useState(ACCOUNT_ICON_KEYS[0])
+  const [name, setName] = useState(editingAccount?.name ?? '')
+  const [currency, setCurrency] = useState(editingAccount?.currency ?? baseCurrency)
+  const [color, setColor] = useState(editingAccount?.color ?? CATEGORY_COLOR_OPTIONS[0])
+  const [icon, setIcon] = useState(editingAccount?.icon ?? ACCOUNT_ICON_KEYS[0])
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
 
@@ -19,8 +19,13 @@ export function AccountForm({ onSubmit }) {
     setSubmitting(true)
     setError(null)
     try {
-      await onSubmit({ name: name.trim(), currency, color, icon })
-      setName('')
+      await onSubmit({ id: editingAccount?.id, name: name.trim(), currency, color, icon })
+      if (!editingAccount) {
+        setName('')
+        setCurrency(baseCurrency)
+        setColor(CATEGORY_COLOR_OPTIONS[0])
+        setIcon(ACCOUNT_ICON_KEYS[0])
+      }
     } catch (submitError) {
       setError(submitError.message)
     } finally {
@@ -30,7 +35,7 @@ export function AccountForm({ onSubmit }) {
 
   return (
     <form className="category-form" onSubmit={handleSubmit}>
-      <h2>Nueva cuenta</h2>
+      <h2>{editingAccount ? 'Editar cuenta' : 'Nueva cuenta'}</h2>
       {error && <p className="form-error">{error}</p>}
 
       <label>
@@ -87,15 +92,22 @@ export function AccountForm({ onSubmit }) {
               aria-pressed={key === icon}
               onClick={() => setIcon(key)}
             >
-              <AccountIcon icon={key} width={22} height={22} />
+              <AccountIcon icon={key} width={18} height={18} />
             </button>
           ))}
         </div>
       </div>
 
-      <button type="submit" disabled={submitting || !name.trim()}>
-        {submitting ? 'Creando...' : '+ Agregar'}
-      </button>
+      <div className="form-actions">
+        <button type="submit" disabled={submitting || !name.trim()}>
+          {submitting ? 'Guardando...' : editingAccount ? 'Guardar cambios' : '+ Agregar'}
+        </button>
+        {editingAccount && (
+          <button type="button" className="secondary-button" onClick={onCancel}>
+            Cancelar
+          </button>
+        )}
+      </div>
     </form>
   )
 }

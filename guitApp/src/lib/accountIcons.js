@@ -8,4 +8,5 @@ export const ACCOUNT_ICON_KEYS = [
   'coins',
   'chart',
   'exchange',
+  'currency',
 ]

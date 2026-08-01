@@ -7,7 +7,13 @@ export function useCurrency() {
   const currency = user?.user_metadata?.currency ?? DEFAULT_CURRENCY
 
   const formatter = useMemo(
-    () => new Intl.NumberFormat('es', { style: 'currency', currency }),
+    () =>
+      new Intl.NumberFormat('es', {
+        style: 'currency',
+        currency,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }),
     [currency],
   )
 

@@ -1,7 +1,7 @@
 // Colores tomados de la paleta categórica validada de la skill dataviz
 // (orden fijo, no se rota) para que cada categoría tenga una identidad estable.
 export const DEFAULT_CATEGORIES = [
-  { name: 'Alimentación', type: 'expense', color: '#eb6834', icon: 'food' },
+  { name: 'Comida y bebida', type: 'expense', color: '#eb6834', icon: 'food' },
   { name: 'Renta', type: 'expense', color: '#eda100', icon: 'home' },
   { name: 'Ocio', type: 'expense', color: '#e87ba4', icon: 'leisure' },
   { name: 'Transporte', type: 'expense', color: '#4a3aa7', icon: 'transport' },

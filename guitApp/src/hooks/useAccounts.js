@@ -86,6 +86,18 @@ export function useAccounts() {
     [user, fetchAccounts],
   )
 
+  const updateAccount = useCallback(
+    async (id, { name, currency, color, icon }) => {
+      const { error: updateError } = await supabase
+        .from('accounts')
+        .update({ name, currency, color, icon })
+        .eq('id', id)
+      if (updateError) throw updateError
+      await fetchAccounts()
+    },
+    [fetchAccounts],
+  )
+
   const deleteAccount = useCallback(
     async (id) => {
       const { error: deleteError } = await supabase.from('accounts').delete().eq('id', id)
@@ -95,5 +107,5 @@ export function useAccounts() {
     [fetchAccounts],
   )
 
-  return { accounts, loading, error, addAccount, deleteAccount, refetch: fetchAccounts }
+  return { accounts, loading, error, addAccount, updateAccount, deleteAccount, refetch: fetchAccounts }
 }

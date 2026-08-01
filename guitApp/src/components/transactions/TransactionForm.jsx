@@ -1,12 +1,24 @@
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AmountInput } from '../shared/AmountInput'
 
 const today = () => new Date().toISOString().slice(0, 10)
+const CREATE_CATEGORY_OPTION = '__create_category__'
 
-export function TransactionForm({ categories, accounts, onSubmit, editingTransaction = null, onCancel }) {
+export function TransactionForm({
+  categories,
+  accounts,
+  defaultAccountId = null,
+  onSubmit,
+  editingTransaction = null,
+  onCancel,
+}) {
+  const navigate = useNavigate()
   const [type, setType] = useState(editingTransaction?.type ?? 'expense')
   const [categoryId, setCategoryId] = useState(editingTransaction?.category_id ?? '')
-  const [accountId, setAccountId] = useState(editingTransaction?.account_id ?? accounts[0]?.id ?? '')
+  const [accountId, setAccountId] = useState(
+    editingTransaction?.account_id ?? defaultAccountId ?? accounts[0]?.id ?? '',
+  )
   const [amount, setAmount] = useState(editingTransaction ? editingTransaction.amount : '')
   const [description, setDescription] = useState(editingTransaction?.description ?? '')
   const [occurredOn, setOccurredOn] = useState(editingTransaction?.occurred_on ?? today())
@@ -47,6 +59,9 @@ export function TransactionForm({ categories, accounts, onSubmit, editingTransac
         occurredOn,
       })
       if (!editingTransaction) {
+        setType('expense')
+        setCategoryId('')
+        setAccountId(defaultAccountId ?? accounts[0]?.id ?? '')
         setAmount('')
         setDescription('')
         setOccurredOn(today())
@@ -88,13 +103,24 @@ export function TransactionForm({ categories, accounts, onSubmit, editingTransac
 
       <label>
         Categoría
-        <select value={categoryId} onChange={(event) => setCategoryId(event.target.value)}>
+        <select
+          value={categoryId}
+          onChange={(event) => {
+            const value = event.target.value
+            if (value === CREATE_CATEGORY_OPTION) {
+              navigate('/categories')
+              return
+            }
+            setCategoryId(value)
+          }}
+        >
           <option value="">Selecciona una categoría</option>
           {filteredCategories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
             </option>
           ))}
+          <option value={CREATE_CATEGORY_OPTION}>+ Crear categoría</option>
         </select>
       </label>
 
