@@ -3,9 +3,10 @@ import { AmountInput } from '../shared/AmountInput'
 
 const today = () => new Date().toISOString().slice(0, 10)
 
-export function TransactionForm({ categories, onSubmit, editingTransaction = null, onCancel }) {
+export function TransactionForm({ categories, accounts, onSubmit, editingTransaction = null, onCancel }) {
   const [type, setType] = useState(editingTransaction?.type ?? 'expense')
   const [categoryId, setCategoryId] = useState(editingTransaction?.category_id ?? '')
+  const [accountId, setAccountId] = useState(editingTransaction?.account_id ?? accounts[0]?.id ?? '')
   const [amount, setAmount] = useState(editingTransaction ? editingTransaction.amount : '')
   const [description, setDescription] = useState(editingTransaction?.description ?? '')
   const [occurredOn, setOccurredOn] = useState(editingTransaction?.occurred_on ?? today())
@@ -24,6 +25,10 @@ export function TransactionForm({ categories, onSubmit, editingTransaction = nul
       setError('Primero crea una categoría de este tipo.')
       return
     }
+    if (!accountId) {
+      setError('Primero crea una cuenta en la sección Cuentas.')
+      return
+    }
     if (!amount || Number(amount) <= 0) {
       setError('Ingresá un monto mayor a 0.')
       return
@@ -35,6 +40,7 @@ export function TransactionForm({ categories, onSubmit, editingTransaction = nul
       await onSubmit({
         id: editingTransaction?.id,
         categoryId: selectedCategory,
+        accountId,
         type,
         amount: Number(amount),
         description,
@@ -87,6 +93,18 @@ export function TransactionForm({ categories, onSubmit, editingTransaction = nul
           {filteredCategories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      <label>
+        Cuenta
+        <select value={accountId} onChange={(event) => setAccountId(event.target.value)}>
+          <option value="">Selecciona una cuenta</option>
+          {accounts.map((account) => (
+            <option key={account.id} value={account.id}>
+              {account.name} ({account.currency})
             </option>
           ))}
         </select>

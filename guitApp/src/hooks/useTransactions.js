@@ -13,7 +13,9 @@ export function useTransactions() {
 
     const { data, error: fetchError } = await supabase
       .from('transactions')
-      .select('*, category:categories(id, name, type, color, icon)')
+      .select(
+        '*, category:categories(id, name, type, color, icon), account:accounts(id, name, color, icon, currency)',
+      )
       .order('occurred_on', { ascending: false })
 
     if (fetchError) {
@@ -33,10 +35,11 @@ export function useTransactions() {
   }, [fetchTransactions])
 
   const addTransaction = useCallback(
-    async ({ categoryId, type, amount, description, occurredOn }) => {
+    async ({ categoryId, accountId, type, amount, description, occurredOn }) => {
       const { error: insertError } = await supabase.from('transactions').insert({
         user_id: user.id,
         category_id: categoryId,
+        account_id: accountId,
         type,
         amount,
         description,
@@ -49,11 +52,12 @@ export function useTransactions() {
   )
 
   const updateTransaction = useCallback(
-    async (id, { categoryId, type, amount, description, occurredOn }) => {
+    async (id, { categoryId, accountId, type, amount, description, occurredOn }) => {
       const { error: updateError } = await supabase
         .from('transactions')
         .update({
           category_id: categoryId,
+          account_id: accountId,
           type,
           amount,
           description,

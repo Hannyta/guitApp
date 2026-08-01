@@ -1,21 +1,36 @@
 import { useMemo } from 'react'
 import { useTransactions } from '../hooks/useTransactions'
 import { useBudgets } from '../hooks/useBudgets'
+import { useAccounts } from '../hooks/useAccounts'
 import { useCurrency } from '../hooks/useCurrency'
+import { formatAmount } from '../lib/currency'
 import { useTransactionsModal } from '../hooks/useTransactionsModal'
 import { usePeriodSelector } from '../hooks/usePeriodSelector'
 import { availableMonthsFromTransactions, availableYearsFromTransactions, isInPeriod } from '../lib/dateHelpers'
 import { CategoryBreakdownChart } from '../components/charts/CategoryBreakdownChart'
 import { MonthlyTrendChart } from '../components/charts/MonthlyTrendChart'
 import { BudgetVsActualChart } from '../components/charts/BudgetVsActualChart'
+import { AccountIcon } from '../components/accounts/AccountIcon'
 import { TransactionsModal } from '../components/shared/TransactionsModal'
 import { PeriodSelector } from '../components/shared/PeriodSelector'
 
 export function DashboardPage() {
   const { transactions, loading: transactionsLoading } = useTransactions()
   const { budgets, loading: budgetsLoading } = useBudgets()
+  const { accounts, loading: accountsLoading } = useAccounts()
   const { format } = useCurrency()
   const { modalData, openTransactionsModal, closeTransactionsModal } = useTransactionsModal()
+
+  const accountBalances = useMemo(
+    () =>
+      accounts.map((account) => ({
+        account,
+        balance: transactions
+          .filter((t) => t.account_id === account.id)
+          .reduce((sum, t) => sum + (t.type === 'income' ? Number(t.amount) : -Number(t.amount)), 0),
+      })),
+    [accounts, transactions],
+  )
 
   const availableMonths = useMemo(() => availableMonthsFromTransactions(transactions), [transactions])
   const availableYears = useMemo(() => availableYearsFromTransactions(transactions), [transactions])
@@ -34,7 +49,7 @@ export function DashboardPage() {
     return { income, expense, balance: income - expense, incomeTransactions, expenseTransactions }
   }, [transactions, activePeriod.year, activePeriod.month])
 
-  if (transactionsLoading || budgetsLoading) {
+  if (transactionsLoading || budgetsLoading || accountsLoading) {
     return <p className="page-loading">Cargando...</p>
   }
 
@@ -92,6 +107,25 @@ export function DashboardPage() {
           <strong className={summary.balance >= 0 ? 'amount-income' : 'amount-expense'}>
             {format(summary.balance)}
           </strong>
+        </div>
+      </section>
+
+      <section className="accounts-overview-section">
+        <h2>Tus cuentas</h2>
+        <div className="accounts-overview">
+          {accountBalances.map(({ account, balance }) => (
+            <div className="account-overview-card" key={account.id}>
+              <span className="category-icon-circle" style={{ backgroundColor: account.color }}>
+                <AccountIcon icon={account.icon} />
+              </span>
+              <div className="account-overview-info">
+                <span className="account-overview-name">{account.name}</span>
+                <strong className={balance >= 0 ? 'amount-income' : 'amount-expense'}>
+                  {formatAmount(balance, account.currency)}
+                </strong>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 

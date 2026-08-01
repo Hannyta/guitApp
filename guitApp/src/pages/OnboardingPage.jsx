@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useCurrency } from '../hooks/useCurrency'
 import { useCategories } from '../hooks/useCategories'
+import { useAccounts } from '../hooks/useAccounts'
 import { useTransactions } from '../hooks/useTransactions'
 import { SUPPORTED_CURRENCIES } from '../lib/currency'
 import { detectCountryCode } from '../lib/geolocation'
@@ -18,6 +19,7 @@ export function OnboardingPage() {
   const { updateProfile } = useAuth()
   const { currency, setCurrency } = useCurrency()
   const { categories } = useCategories()
+  const { accounts, addAccount } = useAccounts()
   const { addTransaction } = useTransactions()
   const navigate = useNavigate()
   const [step, setStep] = useState(1)
@@ -53,16 +55,21 @@ export function OnboardingPage() {
     event.preventDefault()
     setSubmitting(true)
 
+    const cashAccount =
+      accounts.find((account) => account.name === 'Efectivo') ??
+      (await addAccount({ name: 'Efectivo', currency: selectedCurrency, color: '#2a78d6', icon: 'cash' }))
+
     const amount = Number(balance)
     if (amount > 0) {
       const incomeCategory =
-        categories.find((category) => category.name === 'Otros ingresos') ??
+        categories.find((category) => category.name === 'Saldo inicial') ??
         categories.find((category) => category.type === 'income') ??
         categories[0]
 
       if (incomeCategory) {
         await addTransaction({
           categoryId: incomeCategory.id,
+          accountId: cashAccount.id,
           type: 'income',
           amount,
           description: 'Saldo inicial',

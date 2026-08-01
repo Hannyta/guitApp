@@ -455,6 +455,23 @@ select {
   border-top: 1px solid var(--border);
 }
 
+.app-footer-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+  margin-top: 0.6rem;
+}
+
+.app-footer-links a {
+  color: var(--muted);
+  text-decoration: underline;
+}
+
+.app-footer-links a:hover {
+  color: var(--income);
+}
+
 /* Dashboard */
 .dashboard-toolbar {
   display: flex;
@@ -660,9 +677,10 @@ select {
   height: 40px;
   border: none;
   border-radius: 999px;
-  background: var(--muted);
+  background: #429e728a;
   color: white;
   cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .icon-picker-button:hover {
@@ -670,7 +688,8 @@ select {
 }
 
 .icon-picker-button.active {
-  box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--text-primary);
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 3px var(--text-primary);
+  transform: scale(1.08);
 }
 
 .form-actions {
@@ -837,6 +856,55 @@ select {
 .category-name {
   color: var(--text-primary);
   font-size: 0.9rem;
+}
+
+.account-currency-tag {
+  color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+}
+
+.accounts-overview-section {
+  margin-bottom: 1.5rem;
+}
+
+.accounts-overview-section h2 {
+  margin: 0 0 0.75rem;
+}
+
+.accounts-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.account-overview-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.account-overview-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.account-overview-name {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account-overview-info strong {
+  font-size: 1.1rem;
 }
 
 .modal-overlay {

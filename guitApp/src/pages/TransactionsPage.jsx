@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useCategories } from '../hooks/useCategories'
+import { useAccounts } from '../hooks/useAccounts'
 import { useTransactions } from '../hooks/useTransactions'
 import { useTransactionsModal } from '../hooks/useTransactionsModal'
 import { usePeriodSelector } from '../hooks/usePeriodSelector'
@@ -11,6 +12,7 @@ import { PeriodSelector } from '../components/shared/PeriodSelector'
 
 export function TransactionsPage() {
   const { categories, loading: categoriesLoading } = useCategories()
+  const { accounts, loading: accountsLoading } = useAccounts()
   const {
     transactions,
     loading: transactionsLoading,
@@ -31,7 +33,7 @@ export function TransactionsPage() {
     [transactions, activePeriod.year, activePeriod.month],
   )
 
-  if (categoriesLoading || transactionsLoading) {
+  if (categoriesLoading || accountsLoading || transactionsLoading) {
     return <p className="page-loading">Cargando...</p>
   }
 
@@ -57,6 +59,7 @@ export function TransactionsPage() {
       <TransactionForm
         key={editingTransaction?.id ?? 'new'}
         categories={categories}
+        accounts={accounts}
         onSubmit={handleSubmit}
         editingTransaction={editingTransaction}
         onCancel={() => setEditingTransaction(null)}

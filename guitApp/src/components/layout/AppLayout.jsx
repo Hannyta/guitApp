@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { Link, NavLink, Outlet } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { useAutoDetectLocale } from '../../hooks/useAutoDetectLocale'
 import { CurrencySelector } from './CurrencySelector'
@@ -19,6 +19,7 @@ export function AppLayout() {
           <NavLink to="/transactions">Movimientos</NavLink>
           <NavLink to="/budgets">Presupuestos</NavLink>
           <NavLink to="/categories">Categorías</NavLink>
+          <NavLink to="/accounts">Cuentas</NavLink>
         </nav>
         <div className="app-user">
           <CurrencySelector />
@@ -33,6 +34,11 @@ export function AppLayout() {
       </main>
       <footer className="app-footer">
         <span>© {new Date().getFullYear()} GuitApp</span> · <span>Todos los derechos reservados.</span>
+        <nav className="app-footer-links">
+          <Link to="/terms">Términos y condiciones</Link>
+          <Link to="/privacy">Política de privacidad</Link>
+          <Link to="/help">Ayuda o contáctanos</Link>
+        </nav>
       </footer>
     </div>
   )

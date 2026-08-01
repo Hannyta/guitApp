@@ -20,4 +20,8 @@ export const CATEGORY_ICON_KEYS = [
   'laptop',
   'phone',
   'coin',
+  'salary',
+  'goal',
+  'security',
+  'tax',
 ]

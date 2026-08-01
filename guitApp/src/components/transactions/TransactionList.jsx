@@ -1,13 +1,12 @@
-import { useCurrency } from '../../hooks/useCurrency'
+import { formatAmount } from '../../lib/currency'
 import { PencilIcon } from '../icons/PencilIcon'
 import { TrashIcon } from '../icons/TrashIcon'
 import { CategoryBadge } from '../categories/CategoryBadge'
+import { AccountBadge } from '../accounts/AccountBadge'
 
 const dateFormatter = new Intl.DateTimeFormat('es', { day: '2-digit', month: 'short', year: 'numeric' })
 
 export function TransactionList({ transactions, onCategoryClick, onEdit, onDelete }) {
-  const { format } = useCurrency()
-
   if (transactions.length === 0) {
     return <p className="empty-state">No hay movimientos en este período.</p>
   }
@@ -18,6 +17,7 @@ export function TransactionList({ transactions, onCategoryClick, onEdit, onDelet
         <tr>
           <th>Fecha</th>
           <th>Categoría</th>
+          <th>Cuenta</th>
           <th>Descripción</th>
           <th>Monto</th>
           <th></th>
@@ -30,10 +30,13 @@ export function TransactionList({ transactions, onCategoryClick, onEdit, onDelet
             <td>
               <CategoryBadge category={transaction.category} onClick={() => onCategoryClick(transaction.category)} />
             </td>
+            <td>
+              <AccountBadge account={transaction.account} />
+            </td>
             <td>{transaction.description || '—'}</td>
             <td className={transaction.type === 'income' ? 'amount-income' : 'amount-expense'}>
               {transaction.type === 'income' ? '+' : '-'}
-              {format(transaction.amount)}
+              {formatAmount(transaction.amount, transaction.account?.currency)}
             </td>
             <td className="row-actions">
               <button

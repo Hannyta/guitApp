@@ -7,9 +7,10 @@ export const DEFAULT_CATEGORIES = [
   { name: 'Transporte', type: 'expense', color: '#4a3aa7', icon: 'transport' },
   { name: 'Salud', type: 'expense', color: '#e34948', icon: 'health' },
   { name: 'Otros gastos', type: 'expense', color: '#898781', icon: 'other' },
-  { name: 'Salario', type: 'income', color: '#2a78d6', icon: 'briefcase' },
+  { name: 'Salario', type: 'income', color: '#2a78d6', icon: 'salary' },
   { name: 'Freelance', type: 'income', color: '#1baf7a', icon: 'laptop' },
   { name: 'Otros ingresos', type: 'income', color: '#008300', icon: 'coin' },
+  { name: 'Saldo inicial', type: 'income', color: '#2a78d6', icon: 'bank' },
 ]
 
 // Misma paleta categórica validada — se usa para que las categorías que cree
@@ -21,7 +22,12 @@ export const CATEGORY_COLOR_OPTIONS = [
   '#eda100',
   '#e87ba4',
   '#008300',
-  '#4a3aa7',
+  '#7966e9',
   '#e34948',
+  '#74f063',
+  '#53d4c3',
+  '#f7d366',
+  '#854c91',
+  '#773243',
   '#898781',
 ]

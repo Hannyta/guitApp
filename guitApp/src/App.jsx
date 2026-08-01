@@ -9,9 +9,11 @@ import { DashboardPage } from './pages/DashboardPage'
 import { TransactionsPage } from './pages/TransactionsPage'
 import { BudgetsPage } from './pages/BudgetsPage'
 import { CategoriesPage } from './pages/CategoriesPage'
+import { AccountsPage } from './pages/AccountsPage'
 import { TermsPage } from './pages/TermsPage'
 import { PrivacyPage } from './pages/PrivacyPage'
 import { OnboardingPage } from './pages/OnboardingPage'
+import { HelpPage } from './pages/HelpPage'
 
 function PublicOnlyRoute({ children }) {
   const { user, loading } = useAuth()
@@ -41,6 +43,7 @@ function AppRoutes() {
       />
       <Route path="/terms" element={<TermsPage />} />
       <Route path="/privacy" element={<PrivacyPage />} />
+      <Route path="/help" element={<HelpPage />} />
       <Route element={<ProtectedRoute />}>
         <Route path="/onboarding" element={<OnboardingPage />} />
         <Route element={<AppLayout />}>
@@ -48,6 +51,7 @@ function AppRoutes() {
           <Route path="/transactions" element={<TransactionsPage />} />
           <Route path="/budgets" element={<BudgetsPage />} />
           <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/accounts" element={<AccountsPage />} />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
